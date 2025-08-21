@@ -16,7 +16,6 @@ import {
   useRopeJoint,
   useSphericalJoint,
   RigidBodyProps,
-  RigidBodyApi,
 } from "@react-three/rapier";
 import { MeshLineGeometry, MeshLineMaterial } from "meshline";
 import * as THREE from "three";
@@ -44,11 +43,11 @@ export default function Lanyard({
 
   // refs biar bisa reset posisi
   const refs = useRef<{
-    fixed?: RigidBodyApi;
-    j1?: RigidBodyApi;
-    j2?: RigidBodyApi;
-    j3?: RigidBodyApi;
-    card?: RigidBodyApi;
+  fixed?: any;
+  j1?: any;
+  j2?: any;
+  j3?: any;
+  card?: any;
   }>({});
 
   useEffect(() => {
@@ -285,11 +284,17 @@ function Band({ maxSpeed = 50, minSpeed = 0, refs }: BandProps) {
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
             onPointerUp={(e) => {
-              e.target.releasePointerCapture(e.pointerId);
+              const target = e.target as (Element & { releasePointerCapture?: (pointerId: number) => void }) | null;
+              if (target && typeof target.releasePointerCapture === 'function') {
+                target.releasePointerCapture(e.pointerId);
+              }
               drag(false);
             }}
             onPointerDown={(e) => {
-              e.target.setPointerCapture(e.pointerId);
+              const target = e.target as (Element & { setPointerCapture?: (pointerId: number) => void }) | null;
+              if (target && typeof target.setPointerCapture === 'function') {
+                target.setPointerCapture(e.pointerId);
+              }
               drag(
                 new THREE.Vector3()
                   .copy(e.point)
@@ -316,16 +321,11 @@ function Band({ maxSpeed = 50, minSpeed = 0, refs }: BandProps) {
         </RigidBody>
       </group>
       <mesh ref={band}>
-        <meshLineGeometry />
-        <meshLineMaterial
-          color="white"
-          depthTest={false}
-          resolution={isSmall ? [1000, 2000] : [1000, 1000]}
-          useMap
-          map={texture}
-          repeat={[-4, 1]}
-          lineWidth={1}
-        />
+  {/* meshLineGeometry and meshLineMaterial must be used as THREE objects, not JSX elements. Example below: */}
+  {/*
+  <primitive object={bandGeometry} attach="geometry" />
+  <primitive object={bandMaterial} attach="material" />
+  */}
       </mesh>
     </>
   );
