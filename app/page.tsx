@@ -1,103 +1,186 @@
+"use client";
+
 import Image from "next/image";
+import SplitText from "./components/SplitText/SplitText";
+import BlurText from "./components/BlurText/BlurText";
+import AnimatedContent from "./components/AnimatedContent/AnimatedContent";
+import GradientText from "./components/GradientText/GradientText";
+import StarBorder from "./components/StarBorder/StarBorder";
+import NavbarSection from "./components/NavbarSection/NavbarSection";
+import CaseSection from "./components/CaseSection/CaseSection";
+import AboutSection from "./components/AboutSection/AboutSection";
+import ContactSection from "./components/ContactSection/ContactSection";
+import FooterSection from "./components/FooterSection/FooterSection";
+import Spline from "@splinetool/react-spline";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaCode, FaGithub } from "react-icons/fa";
+import { GoPerson } from "react-icons/go";
+import { ReactTyped } from "react-typed";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [loading, setLoading] = useState(true);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 3000); // tampil 3 detik
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <AnimatePresence mode="wait">
+      {loading ? (
+        // 🔹 Loading Screen
+        <motion.div
+          key="loading-screen"
+          className="fixed inset-0 flex items-center justify-center bg-[#111] text-white z-[9999]"
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0, y: "-100%" }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
+        >
+          <div className="flex flex-col items-center gap-6">
+            {/* Icon Border */}
+            <div className="flex flex-wrap gap-3">
+              <a className="flex items-center gap-2 px-4 py-2 rounded-full border text-neutral-300 border-[#06B0FF]">
+                <FaCode size={18} />
+              </a>
+              <a className="flex items-center gap-2 px-4 py-2 rounded-full border text-neutral-300 border-[#06B0FF]">
+                <GoPerson size={18} />
+              </a>
+              <a className="flex items-center gap-2 px-4 py-2 rounded-full border text-neutral-300 border-[#06B0FF]">
+                <FaGithub size={18} />
+              </a>
+            </div>
+
+            {/* Text typed */}
+            <h1 className="text-6xl font-light text-center">
+              <ReactTyped
+                strings={["Welcome to My"]}
+                typeSpeed={80}
+                backSpeed={50}
+                showCursor
+              />
+            </h1>
+
+            {/* Gradient Title */}
+            <GradientText
+              colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
+              animationSpeed={3}
+              showBorder={false}
+              className="text-7xl !font-extrabold text-center"
+            >
+              Portofolio Web
+            </GradientText>
+          </div>
+        </motion.div>
+      ) : (
+        // 🔹 Konten Utama
+        <div
+          key="main-content"
+          className="min-h-screen overflow-x-hidden w-full"
+        >
+          {/* Navbar */}
+          <NavbarSection />
+
+          {/* Home Section */}
+          <section className="relative min-h-screen bg-[#191825] text-white overflow-hidden flex items-center justify-center">
+            <div className="container relative z-10 mx-auto p-4">
+              <div className="grid grid-cols-12">
+                <div className="col-span-6 flex flex-col justify-center items-start gap-4 pl-10">
+                  <AnimatedContent
+                    distance={150}
+                    direction="horizontal"
+                    reverse={false}
+                    duration={1.2}
+                    ease="bounce.out"
+                    initialOpacity={0.2}
+                    animateOpacity
+                    scale={1.1}
+                    threshold={0.2}
+                    delay={0.3}
+                  >
+                    <div className="flex items-center gap-2 pl-9">
+                      <StarBorder>Ready to Innovate</StarBorder>
+                    </div>
+                  </AnimatedContent>
+
+                  <div className="flex flex-col gap-2">
+                    <SplitText
+                      text="Fullstack"
+                      className="text-7xl font-extrabold text-center"
+                      delay={50}
+                      duration={0.6}
+                      ease="power3.out"
+                      splitType="chars"
+                      from={{ opacity: 0, y: 40 }}
+                      to={{ opacity: 1, y: 0 }}
+                      threshold={0.1}
+                      rootMargin="-100px"
+                      textAlign="center"
+                    />
+
+                    <GradientText
+                      colors={[
+                        "#40ffaa",
+                        "#4079ff",
+                        "#40ffaa",
+                        "#4079ff",
+                        "#40ffaa",
+                      ]}
+                      animationSpeed={3}
+                      showBorder={false}
+                      className="text-7xl !font-extrabold text-center pl-9"
+                    >
+                      Developer
+                    </GradientText>
+                  </div>
+
+                  <BlurText
+                    text="Menciptakan website yang inovatif dan menarik perhatian"
+                    delay={100}
+                    animateBy="words"
+                    direction="top"
+                    className="mb-8 font-thin text-xl text-align-justify pl-10"
+                  />
+
+                  <div className="flex items-center gap-4 pl-10">
+                    <a
+                      href=""
+                      className="bg-blue-600 border-2 border-transparent shadow-2xs hover:border-blue-600 hover:bg-transparent hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/70 shadow-blue-400 px-15 py-2 rounded-xl text-lg transition duration-400 ease-in-out transform"
+                    >
+                      About Me
+                    </a>
+
+                    <a
+                      href=""
+                      className="border-2 border-blue-600 shadow-2xs hover:bg-blue-600 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/70 shadow-blue-400 px-15 py-2 rounded-xl text-lg transition duration-400 ease-in-out transform"
+                    >
+                      My Skill
+                    </a>
+                  </div>
+                </div>
+
+                <div className="col-span-6 flex justify-center items-center">
+                  <div className="w-full max-w-[707px] aspect-[707/582]">
+                    <Spline scene="https://prod.spline.design/548T-MtVmfm5Prdl/scene.splinecode" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* About (dengan AOS aktif) */}
+          <AboutSection />
+
+          {/* Case Section */}
+          <CaseSection />
+
+          {/* Contact */}
+          <ContactSection />
+
+          {/* Footer */}
+          <FooterSection />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      )}
+    </AnimatePresence>
   );
 }

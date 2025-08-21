@@ -9,16 +9,39 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@coreui/icons": "^3.0.1",
+    "@coreui/icons-react": "^2.3.0",
+    "@heroui/button": "^2.2.24",
+    "@heroui/image": "^2.2.15",
+    "@heroui/system": "^2.4.20",
+    "@heroui/theme": "^2.4.20",
+    "@react-three/drei": "^10.6.1",
+    "@react-three/fiber": "^9.3.0",
+    "@react-three/rapier": "^2.1.0",
+    "@splinetool/react-spline": "^4.1.0",
+    "@tabler/icons-react": "^3.34.1",
+    "aos": "^3.0.0-beta.6",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.23.12",
+    "gsap": "^3.13.0",
+    "meshline": "^3.3.1",
+    "motion": "^12.23.12",
+    "motion-utils": "^12.23.6",
+    "next": "15.4.6",
+    "ogl": "^1.0.11",
+    "postprocessing": "^6.37.7",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "next": "15.4.6"
+    "react-icons": "^5.5.0",
+    "react-typed": "^2.0.12",
+    "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4"
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }
