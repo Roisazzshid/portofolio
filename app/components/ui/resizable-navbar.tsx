@@ -257,14 +257,11 @@ export const NavbarButton = ({
   ...props
 }: {
   href?: string;
-  as?: React.ElementType;
-  children: React.ReactNode;
+  as?: "a" | "button";
+  children?: React.ReactNode;
   className?: string;
   variant?: "primary" | "secondary" | "dark" | "gradient";
-} & (
-  | React.ComponentPropsWithoutRef<"a">
-  | React.ComponentPropsWithoutRef<"button">
-)) => {
+} & React.ComponentPropsWithoutRef<"a"> & React.ComponentPropsWithoutRef<"button">) => {
   const baseStyles =
     "px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 text-sm font-bold relative cursor-pointer hover:-translate-y-0.5 transition duration-200 inline-block text-center";
 
@@ -275,13 +272,23 @@ export const NavbarButton = ({
   gradient: "bg-gradient-to-b from-blue-500 to-blue-700 text-white",
   };
 
+  if (Tag === "a") {
+    return (
+      <a
+        href={href}
+        className={cn(baseStyles, variantStyles[variant], className)}
+        {...props}
+      >
+        {children}
+      </a>
+    );
+  }
   return (
-    <Tag
-      href={href || undefined}
+    <button
       className={cn(baseStyles, variantStyles[variant], className)}
       {...props}
     >
       {children}
-    </Tag>
+    </button>
   );
 };
