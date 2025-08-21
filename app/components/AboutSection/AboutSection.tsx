@@ -109,8 +109,6 @@ export default function AboutSection() {
               <div className="w-[90%] h-[90%] flex items-center justify-center">
                 <Lanyard
                   position={[0, 0, 15]}
-                  gravity={[0, -40, 0]}
-                  scale={[0.9, 0.9, 0.9]} // scale kecil biar pas
                 />
               </div>
             </div>

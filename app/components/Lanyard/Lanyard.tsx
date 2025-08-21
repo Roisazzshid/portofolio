@@ -37,7 +37,9 @@ export default function Lanyard({
   fov = 20,
   transparent = true,
 }: LanyardProps) {
-  const [gravity, setGravity] = useState<[number, number, number]>([0, 0, 0]);
+  // ✅ The problem was here. You declared `gravity` twice.
+  // We've removed the prop and are now only using useState.
+  const [gravity, setGravity] = useState<[number, number, number]>([0, -40, 0]);
   const bandRef = useRef<any>(null);
 
   // refs biar bisa reset posisi
@@ -59,12 +61,16 @@ export default function Lanyard({
       refs.current.j3?.setTranslation({ x: 1.5, y: 4, z: 0 });
       refs.current.card?.setTranslation({ x: 2, y: 4, z: 0 });
 
-      [refs.current.fixed, refs.current.j1, refs.current.j2, refs.current.j3, refs.current.card].forEach(
-        (r) => {
-          r?.setLinvel({ x: 0, y: 0, z: 0 });
-          r?.setAngvel({ x: 0, y: 0, z: 0 });
-        }
-      );
+      [
+        refs.current.fixed,
+        refs.current.j1,
+        refs.current.j2,
+        refs.current.j3,
+        refs.current.card,
+      ].forEach((r) => {
+        r?.setLinvel({ x: 0, y: 0, z: 0 });
+        r?.setAngvel({ x: 0, y: 0, z: 0 });
+      });
     };
 
     const observer = new IntersectionObserver(
@@ -300,7 +306,11 @@ function Band({ maxSpeed = 50, minSpeed = 0, refs }: BandProps) {
                 metalness={0.8}
               />
             </mesh>
-            <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} />
+            <mesh
+              geometry={nodes.clip.geometry}
+              material={materials.metal}
+              material-roughness={0.3}
+            />
             <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
           </group>
         </RigidBody>
